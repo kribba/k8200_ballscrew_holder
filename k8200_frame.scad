@@ -4,7 +4,7 @@ k8200_frame();
 
 
 module k8200_frame() {
-    translate([0,-416/2-13.25,62]) {
+	translate([0,-440.4/2,62]) {
         //base_west
         translate([13.25,0,0]) {
             rotate([-90,0,0]) {
@@ -41,7 +41,5 @@ module k8200_frame() {
         }
 
     }
-
-    
 }
 
