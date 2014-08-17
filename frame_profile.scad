@@ -1,11 +1,4 @@
 frame_profile(h = 5);
-/*
-difference()
-{
-	translate([5, 0, 0]) cube([26, 35, 5], center = true);
-	translate([0, 0, -10 / 2]) frame_profile(10);
-}
-*/
 
 module frame_profile(h)
 {
