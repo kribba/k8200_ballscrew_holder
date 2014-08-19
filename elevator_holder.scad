@@ -1,40 +1,35 @@
 elevator_holder();
 
-/*
-color("blue",0.3)
-    translate([0,0,22.5])
-        screw_elevator(0);
-*/
 module elevator_holder() {
 
+    r_main_screw_hole = 9.5;
+    r_z_fastener_hole = 5.5/2;
+    r_nut = 9.5/2;
 
     difference() {
+        //Main structure
         union() {
             cylinder(r=48.1/2,h=17.5+5,$fn=100);
             translate([0,-48.1/2,0]) cube([20,48.1,17.5+5]);
         }
 
+        //Main hole for ball screw
         translate([0,0,-1])
-            cylinder(r=8.5,h=46,$fn=100);
+            cylinder(r=r_main_screw_hole,h=46,$fn=100);
 
-        translate([0,-8.5,-1]) {
-            cube([40,2*8.5,40]);
+        //Make the ball screw hole extend to the end of the main structure
+        //Makes the thing mountable...
+        translate([0,-r_main_screw_hole,-1]) {
+            cube([40,2*r_main_screw_hole,40]);
         }
 
-        
-
-        translate([0,0,14]) {
-            for (ys=[-1,1]) {
-                translate([0,ys*(32.7/2+5.5/2),-1])
-                    cylinder(r=5.5/2,h=50,$fn=100);
+        for (phi=[-45,-90,-135,45,90,135]) {
+            translate([(32.5+5.5)/2*cos(phi),(32.5+5.5)/2*sin(phi),12]) {
+                    cylinder(r=r_z_fastener_hole,h=20,$fn=100);
+                    translate([0,0,0])                 rotate([0,0,30])    cylinder(r=9.5/2,h=6,$fn=6);
+                    translate([0,10*phi/abs(phi),3])   rotate([0,0,0])     cube([8,20,6],center=true);
             }
 
-            for (ys=[-1,1]) {
-                for (xs=[-1,1]) {
-                    translate([xs*(21.2/2+5.5/2),ys*(21.2/2+5.5/2),-1])
-                    cylinder(r=5.5/2,h=50,$fn=100);
-                }
-            }
         }
 
         translate([0,0+29/2,5.5/2+3]) rotate([0,90,0]) cylinder(r=5.5/2,h=50,center=true,$fn=100);
@@ -52,59 +47,13 @@ module elevator_holder() {
             cube(49);
 
 
-        translate([0,0,4.5+3]) {
 
-            translate([0,-(32.7/2+5.5/2),3+1]) {
-                rotate([0,0,360/12])
-                    cylinder(r=8/sqrt(3),h=6,$fn=6);
-                translate([-4,-10,0])
-                    cube([8,12,6]);
-            }
-
-            translate([-(21.2/2+5.5/2),-(32.7/2+5.5/2)+5.75,3+1]) {
-                rotate([0,0,360/12])
-                    cylinder(r=8/sqrt(3),h=6,$fn=6);
-                translate([-4,-10,0])
-                    cube([8,12,6]);
-            }
-
-            translate([(21.2/2+5.5/2),-(32.7/2+5.5/2)+5.75,3+1]) {
-                rotate([0,0,360/12])
-                    cylinder(r=8/sqrt(3),h=6,$fn=6);
-                translate([-4,-18,0])
-                    cube([8,20,6]);
-            }
-
-            //-----------------------
-
-            translate([0,(32.7/2+5.5/2),3+1]) {
-                rotate([0,0,360/12])
-                    cylinder(r=8/sqrt(3),h=6,$fn=6);
-                translate([-4,0,0])
-                    cube([8,10,6]);
-            }
-
-            translate([-(21.2/2+5.5/2),(32.7/2+5.5/2)-5.75,3+1]) {
-                rotate([0,0,360/12])
-                    cylinder(r=8/sqrt(3),h=6,$fn=6);
-                translate([-4,0,0])
-                    cube([8,10,6]);
-            }
-
-            translate([(21.2/2+5.5/2),(32.7/2+5.5/2)-5.75,3+1]) {
-                rotate([0,0,360/12])
-                    cylinder(r=8/sqrt(3),h=6,$fn=6);
-                translate([-4,0,0])
-                    cube([8,25,6]);
-        }
 
         //-----------------------
 
 
 
-        }
     }
-
 }
 
 module screw_elevator(elevator_height=100) {
@@ -127,19 +76,18 @@ module screw_elevator(elevator_height=100) {
             translate([0,0,-1])
                 cylinder(r=22/2,h=46,$fn=100);
 
-            for (ys=[-1,1]) {
-                translate([0,ys*(32.7/2+5.5/2),-1])
-                    cylinder(r=5.5/2,h=12,$fn=100);
-            }
-
-            for (ys=[-1,1]) {
-                for (xs=[-1,1]) {
-                    translate([xs*(21.2/2+5.5/2),ys*(21.2/2+5.5/2),-1])
-                    cylinder(r=5.5/2,h=12,$fn=100);
+                for (ys=[-1,1]) {
+                    translate([0,ys*(32.7/2+5.5/2),-1])
+                        cylinder(r=5.5/2,h=12,$fn=100);
                 }
+
+                for (ys=[-1,1]) {
+                    for (xs=[-1,1]) {
+                        translate([xs*(21.2/2+5.5/2),ys*(21.2/2+5.5/2),-1])
+                        cylinder(r=5.5/2,h=12,$fn=100);
+                    }
+                }
+
             }
-
-
         }
     }
-}
